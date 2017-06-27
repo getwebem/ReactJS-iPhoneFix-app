@@ -1,0 +1,15 @@
+body{
+  font-size: 16px;
+  line-height: 1.6em;
+}
+
+
+
+.navbar{
+  margin-bottom:0;
+  border:0;
+}
+
+.jumbotron{
+  background: #e7e7e7;
+}

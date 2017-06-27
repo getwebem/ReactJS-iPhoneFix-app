@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ReactApp</title>
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+    var Navbar = React.createClass({
+      change(page){
+        this.props.change(page);
+      },
+      render(){
+        return(
+          <nav className="navbar navbar-default">
+            <div className="container">
+              <div className="navbar-header">
+                <a className="navbar-brand" href="#">{this.props.brand}</a>
+              </div>
+              <div id="navbar">
+                <ul className="nav navbar-nav">
+                  <li className={(this.props.currentPage === 'home') ? 'active': ''}><a onClick={this.change.bind(this,'home')} href="#">Home</a></li>
+                  <li className={(this.props.currentPage === 'about') ? 'active': ''}><a onClick={this.change.bind(this,'about')} href="#">About</a></li>
+                  <li className={(this.props.currentPage === 'contact') ? 'active': ''}><a onClick={this.change.bind(this,'contact')} href="#">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+    });
+
+    var Jumbotron = React.createClass({
+      render(){
+        return(
+          <div>
+          <div className="jumbotron">
+            <div className="container">
+              <h1>{this.props.heading}</h1>
+              <p className="lead">{this.props.text}</p>
+              <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+            </div>
+          </div>
+          </div>
+        );
+      }
+    });
+
+    var Page = React.createClass({
+      render(){
+        var pageContent;
+        if(this.props.currentPage == 'home'){
+          pageContent = `
+            Early adopters virality holy grail beta rockstar non-disclosure agreement research &
+            development churn rate investor accelerator hypotheses. Infographic early adopters holy
+            grail release technology buyer funding. Assets seed round bandwidth entrepreneur. Funding
+            ecosystem advisor. A/B testing business plan ramen buyer. Crowdsource churn rate business model
+             canvas graphical user interface android mass market validation analytics ramen client angel investor
+             business-to-consumer network effects interaction design.
+            Investor seed round lean startup influencer low hanging fruit non-disclosure agreement buzz.
+            Prototype market investor hypotheses analytics. Android network effects buyer focus lean startup
+            innovator accelerator market iPad churn rate disruptive advisor pivot social proof. Backing buzz equity
+            marketing lean startup. Virality business plan crowdfunding first mover advantage value proposition assets.
+             Series A financing seed money android lean startup user experience investor gamification hypotheses
+             first mover advantage success buzz pitch traction.
+          `;
+        } else if(this.props.currentPage == 'about'){
+          pageContent = `
+          Bandwidth angel investor graphical user interface conversion bootstrapping. Venture ecosystem graphical user
+          interface iteration business-to-consumer innovator bootstrapping launch party analytics marketing.
+          Business-to-consumer customer hypotheses user experience creative crowdsource iPad bootstrapping social proof.
+           Value proposition learning curve release non-disclosure agreement innovator growth hacking infrastructure
+           paradigm shift startup crowdsource low hanging fruit gamification technology. Ownership product management
+           bootstrapping assets hackathon hypotheses churn rate founders pivot metrics business model canvas accelerator
+            user experience investor. Stealth prototype bandwidth crowdfunding metrics holy grail partnership interaction
+            design vesting period crowdsource business-to-business stock low hanging fruit. Ramen disruptive creative
+            launch party business model canvas founders. Deployment crowdfunding hypotheses buzz focus social proof.
+             Pivot seed round niche market alpha research & development termsheet release influencer hackathon creative
+             freemium gen-z bandwidth. Holy grail graphical user interface buyer startup lean startup vesting period
+             disruptive branding gen-z funding venture ramen social media gamification.
+                    `;
+        } else if(this.props.currentPage == 'contact'){
+          pageContent = `Accelerator iPad beta. Release facebook customer technology venture learning curve focus metrics
+          android responsive web design non-disclosure agreement advisor iteration. Creative holy grail alpha virality
+          innovator iteration prototype launch party startup venture pivot angel investor. Entrepreneur vesting period
+          supply chain scrum project founders partnership. Non-disclosure agreement business plan crowdfunding user
+          experience termsheet funding supply chain seed round client paradigm shift handshake graphical user interface
+           research & development infrastructure. Market venture assets strategy advisor rockstar. Innovator alpha iPhone
+            launch party seed money growth hacking iteration angel investor early adopters leverage monetization user
+            experience facebook long tail. Channels iPad scrum project founders buyer return on investment analytics
+            startup validation. Direct mailing pivot analytics advisor launch party bootstrapping graphical user interface
+            customer branding infographic investor paradigm shift android ecosystem. Validation entrepreneur learning curve
+            business model canvas social media series A financing user experience value proposition product management
+            stealth buzz gen-z.`;
+        } else {
+          pageContent = 'This is the home page';
+        }
+        return(
+          <div>
+            <div className="container">
+              <h2>{this.props.currentPage.charAt(0).toUpperCase() + this.props.currentPage.slice(1)}</h2>
+              {pageContent}
+            </div>
+          </div>
+        );
+      }
+    });
+    var Theme = React.createClass({
+      handleChange(page){
+        //alert(page);
+        this.setState({currentPage:page});
+      },
+      getInitialState(){
+        return {
+          currentPage:'contact'
+        }
+      },
+      getDefaultProps(){
+        return {
+          brand:'ReactApp',
+          heading:' iPad ',
+          text: `Virality bandwidth alpha social proof responsive web design product
+          management stealth iPad analytics. Hackathon iteration business-to-consumer
+           partnership. Crowdsource infographic low hanging fruit pivot success vesting
+           period release iPad monetization facebook bandwidth.`
+
+        }
+      },
+      render(){
+        var jumbotron;
+        if(this.state.currentPage == 'home'){
+          jumbotron = <Jumbotron heading={this.props.heading} text={this.props.text} />;
+        } else {
+          jumbotron = '';
+        }
+        return(
+          <div>
+            <Navbar currentPage={this.state.currentPage} brand={this.props.brand} change={this.handleChange} />
+            {jumbotron}
+            <Page currentPage={this.state.currentPage} />
+          </div>
+        );
+      }
+    });
+
+    ReactDOM.render(
+      <div>
+        <Theme />
+      </div>,
+      document.getElementById('root'));
+    </script>
+  </body>
+</html>
